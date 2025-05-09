@@ -16,7 +16,7 @@ Import the `showToast` function and the library's CSS into your project:
 
 ```javascript
 import { showToast } from 'grand-notifications';
-import 'grand-notifications/styles.css';
+import 'grand-notifications/grand-notifications.css';
 ```
 
 Call `showToast` with an options object to display a toast notification:
@@ -102,7 +102,7 @@ In React, use `showToast` inside a `useEffect` hook to avoid DOM manipulation is
 
 ```javascript
 import { showToast } from 'grand-notifications';
-import 'grand-notifications/styles.css';
+import 'grand-notifications/grand-notifications.css';
 import { useEffect } from 'react';
 
 function App() {
