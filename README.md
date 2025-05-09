@@ -29,6 +29,10 @@ showToast({
 });
 ```
 
+## Demo
+
+**[View Live Demo](https://rishi-rj-s.github.io/grand-notifications/)**
+
 ## API
 
 ### `showToast(options)`
