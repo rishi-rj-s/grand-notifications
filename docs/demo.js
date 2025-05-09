@@ -174,4 +174,5 @@ function dismissToast(toast, exitAnim = 'melt') {
      setTimeout(removeToast, 1200);
 }
 
+// Initialize container on script load
 ensureContainer();

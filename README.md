@@ -10,6 +10,12 @@ Install the package via npm:
 npm install grand-notifications
 ```
 
+
+## Demo
+
+**[View Live Demo](https://rishi-rj-s.github.io/grand-notifications/)**
+
+
 ## Usage
 
 Import the `showToast` function and the library's CSS into your project:
@@ -28,10 +34,6 @@ showToast({
     message: 'Operation completed successfully!'
 });
 ```
-
-## Demo
-
-**[View Live Demo](https://rishi-rj-s.github.io/grand-notifications/)**
 
 ## API
 
