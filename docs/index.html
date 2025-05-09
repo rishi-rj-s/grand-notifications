@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <title>Grand Artistic Toast Notifications</title>
+     <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap">
+     <link rel="stylesheet" href="../src/styles.css">
+</head>
+
+<body>
+     <div id="grand-toast-container" aria-live="polite" aria-atomic="true"></div>
+
+     <!-- Demo buttons container -->
+     <div class="demo-container">
+          <div class="demo-section">
+               <h3>Basic Toast Types</h3>
+               <button class="demo-btn success" onclick="showToast({ type: 'success' })">Success Toast</button>
+               <button class="demo-btn error" onclick="showToast({ type: 'error' })">Error Toast</button>
+               <button class="demo-btn info" onclick="showToast({ type: 'info' })">Info Toast</button>
+               <button class="demo-btn warning" onclick="showToast({ type: 'warning' })">Warning Toast</button>
+               <button class="demo-btn custom" onclick="showToast({ type: 'custom' })">Custom Toast</button>
+          </div>
+
+          <div class="demo-section">
+               <h3>Entrance Animations</h3>
+               <button class="demo-btn" onclick="showToast({ type: 'success', entranceAnim: 'slide' })">Slide
+                    In</button>
+               <button class="demo-btn" onclick="showToast({ type: 'success', entranceAnim: 'bounce' })">Bounce
+                    In</button>
+               <button class="demo-btn" onclick="showToast({ type: 'success', entranceAnim: 'fade' })">Fade In</button>
+          </div>
+
+          <div class="demo-section">
+               <h3>Exit Animations</h3>
+               <button class="demo-btn"
+                    onclick="showToast({ type: 'success', entranceAnim: 'slide', exitAnim: 'melt' })">Melt Away</button>
+               <button class="demo-btn"
+                    onclick="showToast({ type: 'success', entranceAnim: 'slide', exitAnim: 'pixel' })">Pixel
+                    Dissolve</button>
+               <button class="demo-btn"
+                    onclick="showToast({ type: 'success', entranceAnim: 'slide', exitAnim: 'hologram' })">Hologram
+                    Flicker</button>
+          </div>
+
+          <div class="demo-section">
+               <h3>Combination Examples</h3>
+               <button class="demo-btn"
+                    onclick="showToast({ type: 'info', entranceAnim: 'bounce', exitAnim: 'melt' })">Bounce +
+                    Melt</button>
+               <button class="demo-btn"
+                    onclick="showToast({ type: 'error', entranceAnim: 'fade', exitAnim: 'pixel' })">Fade +
+                    Pixel</button>
+               <button class="demo-btn"
+                    onclick="showToast({ type: 'warning', entranceAnim: 'slide', exitAnim: 'hologram' })">Slide +
+                    Hologram</button>
+               <button class="demo-btn custom"
+                    onclick="showToast({ type: 'custom', entranceAnim: 'bounce', exitAnim: 'pixel' })">Custom
+                    Combo</button>
+          </div>
+
+          <div class="demo-section">
+               <h3>Special Features</h3>
+               <button class="demo-btn"
+                    onclick="showToast({ type: 'info', title: 'Important Message', message: 'This toast includes both a title and message.' })">With
+                    Title</button>
+               <button class="demo-btn"
+                    onclick="showToast({ type: 'warning', duration: 8000, showProgress: true, message: 'This toast will stay visible for 8 seconds.' })">Long
+                    Duration (8s)</button>
+               <button class="demo-btn"
+                    onclick="showToast({ type: 'error', closable: false, message: 'This toast has no close button.' })">No
+                    Close Button</button>
+               <button class="demo-btn"
+                    onclick="showToast({ background: 'linear-gradient(135deg, #8E2DE2, #4A00E0)', icon: '🎨', message: 'Custom gradient background toast.' })">Custom
+                    Background</button>
+          </div>
+     </div>
+     <script type="module" src="demo.js"></script>
+</body>
+
+</html>
