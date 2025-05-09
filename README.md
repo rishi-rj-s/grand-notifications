@@ -58,50 +58,7 @@ Display a toast notification with customizable options.
 | `background`   | String    | Type-based    | Custom background (CSS value, e.g., `'linear-gradient(135deg, #8E2DE2, #4A00E0)'`) |
 | `showProgress` | Boolean   | `false`       | Whether to show a progress bar indicating the toast's duration             |
 
-#### Examples
-
-```javascript
-// Success toast with custom message
-showToast({
-    type: 'success',
-    message: 'Custom success message!'
-});
-
-// Toast with title and message
-showToast({
-    type: 'info',
-    title: 'Important Message',
-    message: 'This toast includes both a title and message.',
-    duration: 5000
-});
-
-// Long-duration toast with progress bar
-showToast({
-    type: 'warning',
-    message: 'This toast will stay visible for 8 seconds.',
-    duration: 8000,
-    showProgress: true,
-    exitAnim: 'pixel'
-});
-
-// Toast without close button
-showToast({
-    type: 'error',
-    message: 'This toast has no close button.',
-    closable: false,
-    entranceAnim: 'fade',
-    exitAnim: 'hologram'
-});
-
-// Toast with custom background
-showToast({
-    message: 'Custom gradient background toast.',
-    background: 'linear-gradient(135deg, #8E2DE2, #4A00E0)',
-    icon: '🎨'
-});
-```
-
-## Framework Compatibility
+#### Framework Compatibility
 
 ### React
 In React, use `showToast` inside a `useEffect` hook to avoid DOM manipulation issues:
