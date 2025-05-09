@@ -13,7 +13,7 @@ npm install grand-notifications
 
 ## Demo
 
-**[View Live Demo](https://rishi-rj-s.github.io/grand-notifications/)**
+**<a href="https://rishi-rj-s.github.io/grand-notifications/" target="_blank">View Live Demo</a>**
 
 
 ## Usage
