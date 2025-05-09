@@ -1,6 +1,6 @@
 {
   "name": "grand-notifications",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Beautiful, customizable toast notifications with artistic animations",
   "type": "module",
   "main": "dist/index.umd.js",
@@ -45,7 +45,7 @@
     ".": {
       "import": "./dist/index.es.js",
       "require": "./dist/index.umd.js"
-},
+    },
     "./grand-notifications.css": "./dist/grand-notifications.css"
   }
 }
