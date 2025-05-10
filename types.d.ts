@@ -1,4 +1,5 @@
 export interface ToastOptions {
+     position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center' | 'middle';
      type?: 'success' | 'error' | 'info' | 'warning' | 'custom';
      entranceAnim?: 'slide' | 'bounce' | 'fade';
      exitAnim?: 'melt' | 'pixel' | 'hologram';
@@ -8,6 +9,8 @@ export interface ToastOptions {
      message?: string;
      title?: string;
      background?: string;
+     color?: string;
+     speed?: number; 
      showProgress?: boolean;
 }
 

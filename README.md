@@ -13,7 +13,7 @@ npm install grand-notifications
 
 ## Demo
 
-**<a href="https://rishi-rj-s.github.io/grand-notifications/" target="_blank">View Live Demo</a>**
+**<a href="https://rishi-rj-s.github.io/grand-notifications/" target="_blank" rel="noopener noreferrer">View Live Demo</a>**
 
 
 ## Usage
@@ -57,6 +57,9 @@ Display a toast notification with customizable options.
 | `title`        | String    | `undefined`   | Optional title for the toast                                               |
 | `background`   | String    | Type-based    | Custom background (CSS value, e.g., `'linear-gradient(135deg, #8E2DE2, #4A00E0)'`) |
 | `showProgress` | Boolean   | `false`       | Whether to show a progress bar indicating the toast's duration             |
+| `color`        | String    | Type-based    | Custom text color for the toast (CSS value, e.g., `'#ffffff'` or `'rgb(255, 255, 255)'`) |
+| `speed`        | Number    | `1`           | Animation speed multiplier (higher numbers = faster animations)            |
+| `position`     | String    | `'top-right'` | Position of the toast: `'top-left'`, `'top-right'`, `'bottom-left'`, `'bottom-right'`, `'top-center'`, `'bottom-center'`, `'middle'` |
 
 #### Framework Compatibility
 
@@ -176,6 +179,45 @@ onMounted(() => {
 </script>
 ```
 
+### Examples with New Options
+
+```javascript
+// Custom positioning
+showToast({
+  type: 'success',
+  message: 'Toast at the bottom center',
+  position: 'bottom-center'
+});
+
+// Custom text color
+showToast({
+  type: 'info',
+  message: 'Toast with custom text color',
+  color: '#ff5722'
+});
+
+// Custom animation speed
+showToast({
+  type: 'warning',
+  message: 'Toast with faster animations',
+  speed: 1.5,
+  entranceAnim: 'bounce',
+  exitAnim: 'pixel'
+});
+
+// Combining multiple customizations
+showToast({
+  type: 'custom',
+  title: 'Complete Customization',
+  message: 'Customize everything at once!',
+  background: 'linear-gradient(45deg, #673ab7, #3f51b5)',
+  color: '#ffffff',
+  position: 'middle',
+  speed: 0.8,
+  icon: '🎮',
+  showProgress: true
+});
+```
 
 ## Customization
 
@@ -205,6 +247,7 @@ You can customize the appearance of toasts by overriding the CSS variables defin
 - **⏱️ Progress indicator** - Optional visual timer shows users how long notifications will remain
 - **🔔 Multiple notification types** - Success, error, info, warning, and custom styles built in
 - **🧩 TypeScript support** - Full type definitions for improved developer experience
+- **🧭 Flexible positioning** - Place your toasts in any corner or center of the screen
 
 ### Performance Focused
 - **🚀 Optimized rendering** - Minimal DOM impact with efficient animations

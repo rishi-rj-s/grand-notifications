@@ -32,56 +32,67 @@ function ensureContainer() {
      return container;
 }
 
+function updateToastPosition(position) {
+     const container = ensureContainer();
+     const validPositions = ['top-left', 'top-right', 'bottom-left', 'bottom-right', 'top-center', 'bottom-center', 'middle'];
+     container.className = 'grand-toast-container';
+     if (validPositions.includes(position)) {
+          container.classList.add(position);
+     } else {
+          container.classList.add('top-right');
+     }
+}
+
 function showToast(options = {}) {
-     // Validate options
      const validTypes = ['success', 'error', 'info', 'warning', 'custom'];
      const validEntranceAnims = ['slide', 'bounce', 'fade'];
      const validExitAnims = ['melt', 'pixel', 'hologram'];
+     const validPositions = ['top-left', 'top-right', 'bottom-left', 'bottom-right', 'top-center', 'bottom-center', 'middle'];
 
      const type = (options.type && validTypes.includes(options.type)) ? options.type : 'success';
      const entranceAnim = (options.entranceAnim && validEntranceAnims.includes(options.entranceAnim)) ? options.entranceAnim : 'slide';
      const exitAnim = (options.exitAnim && validExitAnims.includes(options.exitAnim)) ? options.exitAnim : 'melt';
+     const position = (options.position && validPositions.includes(options.position)) ? options.position : document.getElementById('toast-position')?.value || 'top-right';
      const duration = typeof options.duration === 'number' && options.duration > 0 ? options.duration : 3000;
      const closable = typeof options.closable === 'boolean' ? options.closable : true;
-     const showProgress = typeof options.showProgress === 'boolean' ? options.showProgress : false;
+     const textColor = typeof options.color === 'string' ? options.color : '';
+     const speed = typeof options.speed === 'number' && options.speed > 0 ? options.speed : 600;
+     const showProgress = typeof options.showProgress === 'boolean' ? options.showProgress : true;
 
      const container = ensureContainer();
+     container.className = 'grand-toast-container';
+     container.classList.add(position);
      const toast = document.createElement('div');
 
-     // Set toast class and accessibility attributes
      toast.className = `grand-toast ${type}`;
      toast.setAttribute('role', 'alert');
      toast.setAttribute('aria-live', 'assertive');
      toast.setAttribute('aria-atomic', 'true');
 
-     // Apply entrance animation
+     const animDuration = `${speed / 1000}s`;
+
      switch (entranceAnim) {
           case 'bounce':
-               toast.style.animation = 'grandEntranceBounce 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+               toast.style.animation = `grandEntranceBounce ${animDuration} cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards`;
                break;
           case 'fade':
-               toast.style.animation = 'grandEntranceFade 0.5s ease-out forwards';
+               toast.style.animation = `grandEntranceFade ${animDuration} ease-out forwards`;
                break;
           default:
-               toast.style.animation = 'grandEntranceSlide 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+               toast.style.animation = `grandEntranceSlide ${animDuration} cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards`;
      }
 
-     // Apply custom background if provided
-     if (options.background) {
-          toast.style.background = options.background;
-     }
+     if (options.background) toast.style.background = options.background;
+     if (textColor) toast.style.color = textColor;
 
-     // Add icon
      const icon = document.createElement('div');
      icon.className = 'grand-toast-icon';
      icon.innerHTML = options.icon || icons[type] || icons.custom;
      toast.appendChild(icon);
 
-     // Add content
      const content = document.createElement('div');
      content.className = 'grand-toast-content';
 
-     // Add title if provided
      if (options.title) {
           const titleElement = document.createElement('h3');
           titleElement.className = 'grand-toast-title';
@@ -89,90 +100,123 @@ function showToast(options = {}) {
           content.appendChild(titleElement);
      }
 
-     // Add message
      const message = document.createElement('p');
      message.className = 'grand-toast-message';
      message.textContent = options.message || toastMessages[type] || toastMessages.custom;
+     if (textColor) message.style.color = textColor;
      content.appendChild(message);
 
      toast.appendChild(content);
 
-     // Add close button if closable
      if (closable) {
           const closeBtn = document.createElement('button');
           closeBtn.className = 'grand-toast-close';
           closeBtn.setAttribute('aria-label', 'Close notification');
           closeBtn.innerHTML = '×';
-          closeBtn.onclick = () => dismissToast(toast, exitAnim);
+          closeBtn.onclick = () => dismissToast(toast, exitAnim, speed);
           toast.appendChild(closeBtn);
      }
 
-     // Add progress bar if enabled
      let progress = null;
      if (showProgress) {
           progress = document.createElement('div');
           progress.className = 'grand-toast-progress';
-          progress.style.animation = `progress ${duration}ms linear forwards`;
+          progress.setAttribute('aria-hidden', 'true');
+          progress.style.transform = 'scaleX(1)';
           toast.appendChild(progress);
      }
 
      container.appendChild(toast);
+ 
+     let startTime = Date.now();
+     let totalPausedDuration = 0;
+     let pauseStartTime = 0;
+     let isPaused = false;
+     let animationFrame;
 
-     // Set timeout for dismissal
-     const timeoutId = setTimeout(() => {
-          dismissToast(toast, exitAnim);
-     }, duration);
+     const updateProgress = (timestamp) => {
+          if (isPaused) return;
 
-     // Pause on hover, but exclude the progress bar
-     toast.addEventListener('mouseenter', () => {
-          clearTimeout(timeoutId);
-          toast.style.animationPlayState = 'paused';
+          const elapsed = Date.now() - startTime - totalPausedDuration;
+          const progressFraction = Math.max(0, 1 - (elapsed / duration));
+
           if (progress) {
-               progress.style.animationPlayState = 'running'; // Ensure progress bar continues
+               progress.style.transform = `scaleX(${progressFraction})`;
           }
+
+          if (elapsed >= duration) {
+               dismissToast(toast, exitAnim, speed);
+               return;
+          }
+
+          animationFrame = requestAnimationFrame(updateProgress);
+     };
+
+     animationFrame = requestAnimationFrame(updateProgress);
+     toast.dataset.animationFrame = animationFrame;
+
+     toast.addEventListener('mouseenter', () => {
+          isPaused = true;
+          cancelAnimationFrame(animationFrame);
+          pauseStartTime = Date.now();
      });
 
      toast.addEventListener('mouseleave', () => {
-          toast.style.animationPlayState = 'running';
-          if (progress) {
-               progress.style.animationPlayState = 'running';
-          }
-          const newTimeoutId = setTimeout(() => {
-               dismissToast(toast, exitAnim);
-          }, duration);
-          toast.dataset.timeoutId = newTimeoutId.toString();
+          if (!isPaused) return;
+          totalPausedDuration += Date.now() - pauseStartTime;
+          isPaused = false;
+          animationFrame = requestAnimationFrame(updateProgress);
      });
+ }
 
-     toast.dataset.timeoutId = timeoutId.toString();
-}
+function dismissToast(toast, exitAnim = 'melt', speed = 600) {
+     if (toast.dataset.isDismissing) return;
+     toast.dataset.isDismissing = 'true';
 
-function dismissToast(toast, exitAnim = 'melt') {
-     if (toast.dataset.timeoutId) {
-          clearTimeout(parseInt(toast.dataset.timeoutId));
+     cancelAnimationFrame(toast.dataset.animationFrame);
+
+     // Complete progress animation or fade out
+     const progress = toast.querySelector('.grand-toast-progress');
+     if (progress) {
+          progress.style.animationPlayState = 'running'; // Ensure animation completes
+          progress.style.animation = `progress 200ms linear forwards`; // Shorten to sync with exit
      }
+
      toast.style.animation = 'none';
-     toast.classList.remove('pixel-exit', 'hologram-exit');
+     toast.style.transform = 'none';
+     toast.style.opacity = '1';
      void toast.offsetHeight;
-     switch (exitAnim) {
-          case 'pixel':
-               toast.classList.add('pixel-exit');
-               toast.style.animation = 'pixelDissolve 1s linear forwards';
-               break;
-          case 'hologram':
-               toast.classList.add('hologram-exit');
-               toast.style.animation = 'hologramFlicker 0.8s ease-out forwards';
-               break;
-          default:
-               toast.style.animation = 'meltAway 0.8s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards';
-     }
+
+     setTimeout(() => {
+          const exitDuration = `${speed / 1000}s`;
+
+          switch (exitAnim) {
+               case 'pixel':
+                    toast.classList.add('pixel-exit');
+                    toast.style.setProperty('--exit-duration', exitDuration);
+                    toast.style.animation = `pixelDissolve ${exitDuration} linear forwards`;
+                    break;
+               case 'hologram':
+                    toast.classList.add('hologram-exit');
+                    toast.style.animation = `hologramFlicker ${exitDuration} ease-out forwards`;
+                    break;
+               case 'melt':
+               default:
+                    console.log('Applying meltAway animation');
+                    toast.style.animation = `meltAway ${exitDuration} cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards`;
+          }
+     }, 50); // Increased to 50ms for reliable reflow
+
      const removeToast = () => {
           if (toast && toast.parentNode) {
                toast.parentNode.removeChild(toast);
           }
      };
+
      toast.addEventListener('animationend', removeToast, { once: true });
-     setTimeout(removeToast, 1200);
+     // Fallback timeout to ensure removal if animationend fails
+     setTimeout(removeToast, speed + 100);
 }
 
-// Initialize container on script load
+
 ensureContainer();
