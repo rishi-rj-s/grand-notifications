@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <title>Grand Artistic Toast Notifications</title>
+     <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap">
+     <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+     <div class="demo-container">
+          <div class="position-selector">
+               <label for="toast-position">Select Toast Position</label>
+               <select id="toast-position" onchange="updateToastPosition(this.value)">
+                    <option value="top-right" selected>Top Right</option>
+                    <option value="top-left">Top Left</option>
+                    <option value="bottom-right">Bottom Right</option>
+                    <option value="bottom-left">Bottom Left</option>
+                    <option value="top-center">Top Center</option>
+                    <option value="bottom-center">Bottom Center</option>
+                    <option value="middle">Middle</option>
+               </select>
+          </div>
+
+          <div class="demo-section">
+               <h3>Basic Toast Types</h3>
+               <div class="button-group">
+                    <button class="demo-btn success" aria-label="Show success toast"
+                         onclick="showToast({ type: 'success' })">Success Toast</button>
+                    <button class="demo-btn error" aria-label="Show error toast"
+                         onclick="showToast({ type: 'error' })">Error Toast</button>
+                    <button class="demo-btn info" aria-label="Show info toast"
+                         onclick="showToast({ type: 'info' })">Info Toast</button>
+                    <button class="demo-btn warning" aria-label="Show warning toast"
+                         onclick="showToast({ type: 'warning' })">Warning Toast</button>
+                    <button class="demo-btn custom" aria-label="Show custom toast"
+                         onclick="showToast({ type: 'custom' })">Custom Toast</button>
+               </div>
+          </div>
+
+          <div class="demo-section">
+               <h3>Entrance Animations</h3>
+               <div class="button-group">
+                    <button class="demo-btn" aria-label="Show slide in toast"
+                         onclick="showToast({ type: 'success', entranceAnim: 'slide' })">Slide In</button>
+                    <button class="demo-btn" aria-label="Show bounce in toast"
+                         onclick="showToast({ type: 'success', entranceAnim: 'bounce' })">Bounce In</button>
+                    <button class="demo-btn" aria-label="Show fade in toast"
+                         onclick="showToast({ type: 'success', entranceAnim: 'fade' })">Fade In</button>
+               </div>
+          </div>
+
+          <div class="demo-section">
+               <h3>Exit Animations</h3>
+               <div class="button-group">
+                    <button class="demo-btn" aria-label="Show melt away toast"
+                         onclick="showToast({ type: 'success', entranceAnim: 'slide', exitAnim: 'melt' })">Melt
+                         Away</button>
+                    <button class="demo-btn" aria-label="Show pixel dissolve toast"
+                         onclick="showToast({ type: 'success', entranceAnim: 'slide', exitAnim: 'pixel' })">Pixel
+                         Dissolve</button>
+                    <button class="demo-btn" aria-label="Show hologram flicker toast"
+                         onclick="showToast({ type: 'success', entranceAnim: 'slide', exitAnim: 'hologram' })">Hologram
+                         Flicker</button>
+               </div>
+          </div>
+
+          <div class="demo-section">
+               <h3>Animation Combinations</h3>
+               <div class="button-group">
+                    <button class="demo-btn" aria-label="Show bounce and melt toast"
+                         onclick="showToast({ type: 'info', entranceAnim: 'bounce', exitAnim: 'melt' })">Bounce +
+                         Melt</button>
+                    <button class="demo-btn" aria-label="Show fade and pixel toast"
+                         onclick="showToast({ type: 'error', entranceAnim: 'fade', exitAnim: 'pixel' })">Fade
+                         + Pixel</button>
+                    <button class="demo-btn" aria-label="Show slide and hologram toast"
+                         onclick="showToast({ type: 'warning', entranceAnim: 'slide', exitAnim: 'hologram' })">Slide +
+                         Hologram</button>
+                    <button class="demo-btn custom" aria-label="Show custom combo toast"
+                         onclick="showToast({ type: 'custom', entranceAnim: 'bounce', exitAnim: 'pixel' })">Custom
+                         Combo</button>
+               </div>
+          </div>
+
+          <div class="demo-section">
+               <h3>Special Features</h3>
+               <div class="button-group">
+                    <button class="demo-btn" aria-label="Show toast with title"
+                         onclick="showToast({ type: 'info', title: 'Important Message', message: 'This toast includes both a title and message.' })">With
+                         Title</button>
+                    <button class="demo-btn" aria-label="Show long duration toast"
+                         onclick="showToast({ type: 'warning', duration: 8000, showProgress: true, message: 'This toast will stay visible for 8 seconds.' })">Long
+                         Duration (8s)</button>
+                    <button class="demo-btn" aria-label="Show toast without close button"
+                         onclick="showToast({ type: 'error', closable: false, message: 'This toast has no close button.' })">No
+                         Close Button</button>
+                    <button class="demo-btn" aria-label="Show custom background toast"
+                         onclick="showToast({ background: 'linear-gradient(135deg, #8E2DE2, #4A00E0)', icon: '🎨', message: 'Custom gradient background toast.' })">Custom
+                         Background</button>
+                    <button class="demo-btn" aria-label="Show fast animation toast"
+                         onclick="showToast({ type: 'success', speed: 300, message: 'This toast has a faster animation (0.3s).' })">Fast
+                         Animation (0.3s)</button>
+                    <button class="demo-btn" aria-label="Show custom text color toast"
+                         onclick="showToast({ type: 'info', color: '#FFD700', message: 'This toast has golden text color.' })">Custom
+                         Text Color</button>
+               </div>
+          </div>
+     </div>
+
+     <script src="demo.js"></script>
+</body>
+
+</html>

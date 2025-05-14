@@ -1,0 +1,31 @@
+{
+     "compilerOptions": {
+          "baseUrl": "./",
+          "paths": {
+               "*": [
+                    "*",
+                    "src/*"
+               ]
+          },
+          "target": "ESNext",
+          "module": "ESNext",
+          "declaration": true,
+          "outDir": "dist",
+          "rootDir": "src",
+          "strict": true,
+          "esModuleInterop": true,
+          "skipLibCheck": true,
+          "allowJs": true,
+          "checkJs": true,
+          "typeRoots": [
+               "./node_modules/@types",
+          ]
+     },
+     "include": [
+          "src/**/*",
+     ],
+     "exclude": [
+          "node_modules",
+          "dist"
+     ]
+}
