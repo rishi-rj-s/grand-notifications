@@ -9,18 +9,7 @@
      --toast-font-body: 'Poppins', sans-serif;
      --toast-font-heading: 'Playfair Display', serif;
  }
- 
- body {
-     margin: 0;
-     padding: 2rem;
-     font-family: var(--toast-font-body);
-     background: #f5f7fa;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     min-height: 100vh;
- }
- 
+  
  #grand-toast-container {
      position: fixed;
      z-index: 999999;
@@ -258,7 +247,7 @@
          );
      }
      100% {
-         opacity: 0;
+         opacity: 0.2;
          transform: translateY(15px);
          clip-path: polygon(
              0% 0%, 12% 0%, 12% 12%, 24% 12%, 24% 0%, 36% 0%, 36% 12%, 
@@ -327,9 +316,7 @@
  
      .grand-toast-title { font-size: 0.95rem; }
      .grand-toast-message { font-size: 0.85rem; }
- 
-     body { padding: 1rem; }
- }
+  }
  
  @media (max-width: 400px) {
      :root {

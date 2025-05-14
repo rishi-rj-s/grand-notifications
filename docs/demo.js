@@ -203,7 +203,7 @@ function showToast(options = {}) {
      }
 }
 
-function dismissToast(toast, exitAnim = 'melt', speed = 600) {
+function dismissToast(toast, exitAnim = 'melt', speed = 1000) {
      if (toast.dataset.isDismissing) return;
 
      // Clean up animation frame and event listeners
@@ -234,8 +234,6 @@ function dismissToast(toast, exitAnim = 'melt', speed = 600) {
 
           switch (exitAnim) {
                case 'pixel':
-                    // Preserve ALL the original styling
-                    // Simply apply the animation without any filter or color changes
                     toast.style.animation = `pixelDissolve ${exitDuration} ease-out forwards`;
                     break;
                case 'hologram':
